@@ -2,9 +2,9 @@
  * Authors: designed and written by Irina Abnizova (ia1) and Steven Leonard (srl)
  *
   Last edited:
-  June 2018 : removed monotonicity while it is not further than halh-height
+  June 2018 : removed monotonicity while it is not further than half-height
+  28 Sep 2016 -when outputting filtered modes skip stdev
    2 Sept 2016- to introduce 3-4 smoothing iteration BEFORE stabilizing check
-  28 Sep -when outputting filtered modes skip stdev
   30 Jan -sds, monotonuity, separate treating of first and last bin peaks: twice larger std
   Jan 2015--added first and last bins as possible peaks(after bug in run 14975)
         -- added estimation of standard deviation for all modes filtered in
@@ -395,7 +395,7 @@ float EstimateStd (float hist[],int bins[],int nbins, int mu, float height)
     {
         if (bins[n] >= mu)// to the Right of mode
         {
-            if ((hist[n] > threshold) & (hist[n] >= hist[n+1]))// added monotonity condition 29 Jan
+            if ((hist[n] >= threshold))// 14 June :removed monotonicity & (hist[n] >= hist[n+1]))// added monotonity condition 29 Jan
             {
                 ma_bin = bins[n];
             }
@@ -410,7 +410,7 @@ float EstimateStd (float hist[],int bins[],int nbins, int mu, float height)
     {
         if (bins[n] <= mu)// to the Left of mode
         {
-            if ((hist[n] > threshold) & (hist[n-1] <= hist[n]))// added monotonity condition 29 Jan
+            if ((hist[n] >= threshold))// removed monotonicity 14 June 2018& (hist[n-1] <= hist[n]))// added monotonity condition 29 Jan
             {
                 mi_bin = bins[n];
             }
